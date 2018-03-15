@@ -65,7 +65,7 @@ This type of legal agreement can be used for both your website and your mobile a
                  {this.renderModalContent()}
                 </Modal>
 
-                </View>
+            </View>
         )
     }
     facebookTerms(){
