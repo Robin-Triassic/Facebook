@@ -1,10 +1,13 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import JoinFacebookScreen from './Script/JoinFacebook'
+import SignUp from './Script/SignUp'
+import SignUpName from './Script/SignUpName'
+import SignUpGender from './Script/signUpGender'
 export default class App extends React.Component {
   render() {
     return (
-      <JoinFacebookScreen/>
+      <SignUpGender/>
     );
   }
 }
