@@ -1,26 +1,40 @@
 import React , {Component} from 'react'
 import {View,AppRegistry,Text,SafeAreaView,StyleSheet,Alert,TouchableOpacity,ScrollView,Button} from 'react-native'
 import Modal from 'react-native-modal'
+import {StackNavigator,NavigationActions} from 'react-navigation'
+import Example from './Example'
 
-export default class JoinFaceBookScreen extends Component{
+
+  export default class JoinFaceBookScreen extends React.Component{
+    static navigationOptions = {
+        header : null
+    }
     render(){
+       
+        const showLoginNavigationAction = NavigationActions.reset({
+            index: 0,
+            actions: [NavigationActions.navigate({ routeName: 'LogIn' })],
+          });
+          
+        const { navigate } = this.props.navigation;
         return(
             <SafeAreaView style = {{flex:1}}>
-                <View style = {{flex:1,alignItems : 'center',justifyContent : 'center',padding : 20,backgroundColor:'rgb(232,235,238)'}}>
+                <View style = {{flex:1,alignItems : 'center',justifyContent : 'center',backgroundColor:'rgb(232,235,238)'}}>
                 <View style = {{flex:1,justifyContent : 'center'}} >
                 <JoinFacebookDescription style = {{textAlign : 'center'}}/>
                 </View>
-                <TouchableOpacity onPress = {this.toggleModal} style = {{borderTopWidth : 1,borderTopColor:'grey', marginLeft : 0,marginRight : 0,height : 40,marginBottom:0,backgroundColor : 'transparent',alignItems:'center',justifyContent:'center',borderRadius:6}}> 
-                <Text style = {{color:'blue',fontSize : 14,fontWeight : '300'}}> Already have an account? </Text>
+                <TouchableOpacity onPress = {()=>  this.props.navigation.dispatch(showLoginNavigationAction)} style = {{borderTopWidth : 1.8,borderTopColor:'rgba(76,87,100,0.2)', width : '100%',height : 45,marginBottom:0,backgroundColor : 'transparent',alignItems:'center',justifyContent:'center',borderRadius:6}}> 
+                <Text style = {{ color : 'rgba(66,109,159,0.8)',fontSize : 15,fontWeight :'600'}}> Already have an account? </Text>
                  </TouchableOpacity>
 
                 </View>
             </SafeAreaView>
         )
     }
+
 }
 
-class JoinFacebookDescription extends Component{
+class JoinFacebookDescription extends React.Component{
     state = {
         isModalVisible : false
     }
@@ -42,8 +56,8 @@ This type of legal agreement can be used for both your website and your mobile a
     toggleModal = () => this.setState({isModalVisible : !this.state.isModalVisible})
     render(){
         return(
-            <View >
-            <Text style = {{fontWeight : '200',fontSize : 26,color:'rgba(40,108,175,0.8)',padding :35,textAlign : 'center'}}>Join Facebook</Text>
+            <View style = {{marginLeft : 20,marginRight : 20}}>
+            <Text style = {{fontWeight : '700',fontSize : 24,color:'rgba(40,108,175,0.8)',padding :25,textAlign : 'center'}}>Join Facebook</Text>
             <Text style = {{textAlign : 'center'}}>
                 <Text style = {MyStyles.defaultText}>By, signing up, you agree to our </Text>
                 <Text style = {MyStyles.linkText} onPress = {this.toggleModal}>Facebook Terms </Text >
@@ -55,12 +69,9 @@ This type of legal agreement can be used for both your website and your mobile a
                 <Text style = {MyStyles.linkText}>SMS Notification </Text>
                 <Text style = {MyStyles.defaultText}>from Facebook and can opt-out any time. </Text>
                 </Text>
-                <TouchableOpacity onPress = {this.toggleModal} style = {{marginTop : 20,marginLeft : 0,marginRight : 0,height : 40,backgroundColor : 'rgba(47,152,250,1)',alignItems:'center',justifyContent:'center',borderRadius:6}}> 
-                <Text style = {{color:'white',fontSize : 20,fontWeight : '300'}}> Get Started </Text>
+                <TouchableOpacity onPress = {this.loadSignUpFirstPage} style = {{marginTop : 30,marginLeft : 0,marginRight : 0,height : 45,backgroundColor : 'rgba(47,152,250,1)',alignItems:'center',justifyContent:'center',borderRadius:6}}> 
+                <Text style = {{color:'white',fontSize : 20,fontWeight : '700'}}> Get Started </Text>
                  </TouchableOpacity>
-                
-              
-              
                 <Modal isVisible = {this.state.isModalVisible === true} >
                  {this.renderModalContent()}
                 </Modal>
@@ -78,11 +89,13 @@ This type of legal agreement can be used for both your website and your mobile a
 const MyStyles = StyleSheet.create({
     defaultText : {
         color : 'rgba(76,87,100,0.8)',
-        fontSize : 16
+        fontSize : 18,
+        lineHeight : 28,
     },
     linkText :{
         color : 'rgba(66,109,159,0.8)',
-        fontSize : 16
+        fontSize : 18,
+        lineHeight : 28,
     },
     modalContent: {
         backgroundColor: "white",
