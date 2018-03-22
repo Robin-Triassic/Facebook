@@ -8,20 +8,33 @@ import {View,
     KeyboardAvoidingView,
     Button,
     Alert} from 'react-native'
+import {NavigationActions} from 'react-navigation'
+import GestureRecognizer , {swipeDirections} from 'react-native-swipe-gestures'
+import SignUpContainer from './SignUpContainer'
 
-export default class SignUp extends Component{
-
+export default class SignUp_EmailId extends Component{
+    constructor(render){
+        super(render)
+    }
+    static navigationOptions = {
+        header : null
+    }
+    didSwipeRight(gestureState){
+        this.props.navigation.pop(1)
+    }
     render(){
+        const config  = {
+            velocityThreshold:0.3,
+            directionalOffsetThreshold : 10
+        }
         return(
-            <SafeAreaView style = {{flex:1}}>
                 <KeyboardAvoidingView style = {{flex:1,
                                                 alignItems : 'center',
                                                 justifyContent : 'center',
                                                 padding : 20, 
                                                 backgroundColor: 'rgb(227,230,234)'}}>
-                <SignUpDetails style = {{textAlign : 'center'}}/>
+                <SignUpDetails style = {{textAlign : 'center'}} navigation = {this.props.navigation}/>
                 </KeyboardAvoidingView>
-            </SafeAreaView>
         )
     }
 }
@@ -40,6 +53,16 @@ class SignUpDetails extends Component{
         };
     }
     render(){
+
+        const showPhoneNumberNavigationAction = NavigationActions.reset({
+            index:1,
+            actions:[NavigationActions.navigate({routeName:'JoinFB'}),NavigationActions.navigate({routeName:'SignUp_PhoneNumber'})]                
+        })
+        
+        const navigateToNameScreenAction = NavigationActions.push({
+            routeName : 'SignUp_Name',
+        })
+
         return(
             <View style = {styles.containerView}>
                 <Text style = {styles.HeadingText}>What's your email Address?</Text>
@@ -48,12 +71,15 @@ class SignUpDetails extends Component{
                     placeholderTextColor="rgb(211,211,211)"
                     keyboardType='email-address'
                     onChangeText={(text) => this.setState({text})}
-                    value={this.state.text} >
+                    value={this.state.text} 
+                    returnKeyType = 'next'
+                    onSubmitEditing = {()=>this.props.navigation.dispatch(navigateToNameScreenAction)}
+                    >
                 </TextInput>
                 <Text style = {styles.defaultText}>You'll use this email when you log in and if you ever need to reset to your password.</Text>
                 <View style = {styles.buttonContainerView}> 
                     <Button style = {styles.Button}
-                        onPress={this._onPressButton}
+                        onPress={()=>this.props.navigation.dispatch(showPhoneNumberNavigationAction)}
                         title="Use your mobile number"
                         color="rgb(61,68,82)"    
                     />
@@ -91,7 +117,6 @@ const styles = StyleSheet.create({
         height: 40,
         textAlign: 'center', 
         borderRadius: 5
-
     },
     buttonView: {
         color: 'rgb(61,68,82)',

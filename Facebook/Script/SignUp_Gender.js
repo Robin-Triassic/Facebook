@@ -11,7 +11,7 @@ import {View,
     TouchableOpacity,
     Image} from 'react-native'
 
-export default class SignUpGender extends Component{
+export default class SignUp_Gender extends Component{
 
     render(){
         return(

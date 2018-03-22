@@ -1,5 +1,5 @@
 import React , {Component} from 'react'
-import {SafeAreaView,View,Text,Image,StyleSheet,AppRegistry,TouchableOpacity,TextInput} from 'react-native'
+import {SafeAreaView,View,Text,Image,StyleSheet,AppRegistry,TouchableOpacity,TextInput,TextInputAndroidProperties} from 'react-native'
 import {StackNavigator,NavigationActions} from 'react-navigation'
 export default class LogIn extends Component{
     static navigationOptions = {
@@ -19,8 +19,8 @@ export default class LogIn extends Component{
             <View style ={{flex:1,backgroundColor :'transparent',margin : 30,alignItems : 'center',justifyContent : 'center',alignItems : 'stretch'}}>
             {/* <View style = {{backgroundColor :'white',height : 40}}/>
             <View style = {{flex:1,backgroundColor :'skyblue'}}/> */}
-            <TextInput placeholder = 'Email address or Phone number' style = {MyStyles.inputText}/>
-            <TextInput placeholder = 'Password'style = {MyStyles.inputText}/>
+            <TextInput placeholder = 'Email address or Phone number' style = {MyStyles.inputText} underlineColorAndroid={'transparent'} />
+            <TextInput placeholder = 'Password'style = {MyStyles.inputText}underlineColorAndroid={'transparent'} secureTextEntry = {true}/>
             <TouchableOpacity onPress = {() => console.log('Login')}
              style = {{backgroundColor : 'rgb(66,109,169)',height : 45,alignItems : 'center',justifyContent : 'center',marginTop : 22}}>
                 <Text style = {{color : 'rgba(255,255,255,0.4)',fontWeight : 'bold'}}> LOG IN </Text>
@@ -29,7 +29,7 @@ export default class LogIn extends Component{
 
             </View>
             <TouchableOpacity onPress = {()=> this.props.navigation.dispatch(showInitialFBNavigationAction)}
-             style = {{backgroundColor : 'rgba(0,161,40,1)',height : 45,alignItems : 'center',justifyContent : 'center',alignSelf :'center'}}>
+             style = {{backgroundColor : 'rgba(0,161,40,1)',height : 45,alignItems : 'center',justifyContent : 'center',alignSelf :'center',marginBottom : 16}}>
             <Text style = {MyStyles.createNewText}> CREATE NEW FACEBOOK ACCOUNT </Text>
                 </TouchableOpacity>
             </View>
@@ -60,5 +60,5 @@ const MyStyles = StyleSheet.create({
         borderBottomColor:'rgba(76,87,100,0.2)',
         fontSize : 16,
         fontWeight : '600'
-    }
+        }
 })

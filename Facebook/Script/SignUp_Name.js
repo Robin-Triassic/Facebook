@@ -8,9 +8,12 @@ import {View,
     KeyboardAvoidingView,
     Button,
     Alert} from 'react-native'
+import {StackNavigator,NavigationActions} from 'react-navigation'
 
-export default class SignUpName extends Component{
-
+export default class SignUp_Name extends Component{
+    static navigationOptions = {
+        header : null
+    }
     render(){
         return(
             <SafeAreaView style = {{flex:1}}>
@@ -19,7 +22,7 @@ export default class SignUpName extends Component{
                                                 justifyContent : 'center',
                                                 padding : 20, 
                                                 backgroundColor: 'rgb(227,230,234)'}}>
-                <SignUpDetails style = {{textAlign : 'center'}}/>
+                <SignUpDetails style = {{textAlign : 'center'}} navigation = {this.props.navigation}/>
                 </KeyboardAvoidingView>
             </SafeAreaView>
         )
@@ -41,6 +44,10 @@ class SignUpDetails extends Component{
         };
     }
     render(){
+        const showDOBNavigationAction = NavigationActions.reset({
+            index : 0,
+            actions : [NavigationActions.navigate({routeName:'SignUp_DOB'})]
+        })
         return(
             <View style = {styles.containerView}>
                 <Text style = {styles.HeadingText}>What's your Name?</Text>
@@ -55,7 +62,8 @@ class SignUpDetails extends Component{
                     placeholder="Last Name"
                     placeholderTextColor="rgb(211,211,211)"
                     onChangeText={(text) => this.setState({lastName})}
-                    value={this.state.lastName} >
+                    value={this.state.lastName} 
+                    >
                 </TextInput>
                 </View>
                 

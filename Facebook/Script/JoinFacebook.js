@@ -21,7 +21,7 @@ import Example from './Example'
             <SafeAreaView style = {{flex:1}}>
                 <View style = {{flex:1,alignItems : 'center',justifyContent : 'center',backgroundColor:'rgb(232,235,238)'}}>
                 <View style = {{flex:1,justifyContent : 'center'}} >
-                <JoinFacebookDescription style = {{textAlign : 'center'}}/>
+                <JoinFacebookDescription style = {{textAlign : 'center'}} navigation = {this.props.navigation}/>
                 </View>
                 <TouchableOpacity onPress = {()=>  this.props.navigation.dispatch(showLoginNavigationAction)} style = {{borderTopWidth : 1.8,borderTopColor:'rgba(76,87,100,0.2)', width : '100%',height : 45,marginBottom:0,backgroundColor : 'transparent',alignItems:'center',justifyContent:'center',borderRadius:6}}> 
                 <Text style = {{ color : 'rgba(66,109,159,0.8)',fontSize : 15,fontWeight :'600'}}> Already have an account? </Text>
@@ -35,6 +35,9 @@ import Example from './Example'
 }
 
 class JoinFacebookDescription extends React.Component{
+    constructor(props){
+        super(props)
+    }
     state = {
         isModalVisible : false
     }
@@ -55,6 +58,12 @@ This type of legal agreement can be used for both your website and your mobile a
     
     toggleModal = () => this.setState({isModalVisible : !this.state.isModalVisible})
     render(){
+
+        const showPhoneNumberInput = NavigationActions.push({
+            routeName : 'SignUp_PhoneNumber'
+          });
+          
+
         return(
             <View style = {{marginLeft : 20,marginRight : 20}}>
             <Text style = {{fontWeight : '700',fontSize : 24,color:'rgba(40,108,175,0.8)',padding :25,textAlign : 'center'}}>Join Facebook</Text>
@@ -69,7 +78,7 @@ This type of legal agreement can be used for both your website and your mobile a
                 <Text style = {MyStyles.linkText}>SMS Notification </Text>
                 <Text style = {MyStyles.defaultText}>from Facebook and can opt-out any time. </Text>
                 </Text>
-                <TouchableOpacity onPress = {this.loadSignUpFirstPage} style = {{marginTop : 30,marginLeft : 0,marginRight : 0,height : 45,backgroundColor : 'rgba(47,152,250,1)',alignItems:'center',justifyContent:'center',borderRadius:6}}> 
+                <TouchableOpacity onPress = {()=>this.props.navigation.dispatch(showPhoneNumberInput)} style = {{marginTop : 30,marginLeft : 0,marginRight : 0,height : 45,backgroundColor : 'rgba(47,152,250,1)',alignItems:'center',justifyContent:'center',borderRadius:6}}> 
                 <Text style = {{color:'white',fontSize : 20,fontWeight : '700'}}> Get Started </Text>
                  </TouchableOpacity>
                 <Modal isVisible = {this.state.isModalVisible === true} >

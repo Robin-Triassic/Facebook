@@ -7,13 +7,37 @@ import {View,
         Dimensions, 
         Button, 
         Alert} from 'react-native';
+import {NavigationActions} from 'react-navigation'
+import GestureRecognizer,{swipeDirectons} from 'react-native-swipe-gestures'
+
+
 const { width, height } = Dimensions.get('window');
 const equalWidth =  (width / 3 );
 
-export default class PhoneNumberInput extends Component{
 
 
+export default class SignUp_PhoneNumber extends Component{
+    static navigationOptions = {
+        header : null
+    }
+    didSwipeRight(gestureState){
+        this.props.navigation.pop(1)
+    }
     render() {
+        console.log('Signup phone number')
+    
+        const showEmailNavigationAction = NavigationActions.reset({
+            index:1,
+            actions : [NavigationActions.navigate({routeName:'JoinFB'}),NavigationActions.navigate({routeName:'SignUpEmailId'})]
+        })
+
+        const showNameNavigationAction = NavigationActions.navigate({
+            routeName : 'SignUp_Name'
+        })
+        const config = {
+
+        }
+
         return(
             <SafeAreaView style = {styles.container} >
                 <Text style = { styles.captionLabelProperties }>What's Your Mobile Number?</Text>
@@ -25,13 +49,13 @@ export default class PhoneNumberInput extends Component{
                     />
                     <Text style = {styles.countryCodeTxt}>+91</Text>
                     <TextInput style = {styles.inputText}
-                    placeholder = "Enter your mobile number"
+                    placeholder = "Enter your mobile number" returnKeyType = 'next' onSubmitEditing = {()=> this.props.navigation.dispatch(showNameNavigationAction) }
                     />
                 </View>
                 <Text style = {styles.instructionText}>You'll use this number when you log in and if you ever need to reset your password.</Text>
                 <View style = {styles.emailBtn}>
                     <Text style = {styles.emailBtnContents}
-                          onPress= {this._onPressEmailConfirmation.bind(this)} >Use your email address</Text>
+                          onPress= {()=> this.props.navigation.dispatch(showEmailNavigationAction)} >Use your email address</Text>
                 </View>
             </SafeAreaView>
         );
