@@ -6,8 +6,11 @@ import {View,
         StyleSheet, 
         Dimensions, 
         Button, 
+        TouchableOpacity,
         Alert} from 'react-native';
 import {NavigationActions} from 'react-navigation'
+import ModalDropdown from 'react-native-modal-dropdown';
+import Data from '../assets/PhoneNumberInput/DropDown/CountryList.json';
 import GestureRecognizer,{swipeDirectons} from 'react-native-swipe-gestures'
 
 
@@ -17,6 +20,39 @@ const equalWidth =  (width / 3 );
 
 
 export default class SignUp_PhoneNumber extends Component{
+
+    constructor(props) {
+        super(props)
+        this.state = { data : Data, stateCodeList : [], selectedCountryNumber : '', phoneNumber : ''}
+    }
+
+    getCountryCode = () => {
+        var tmpArray = this.state.stateCodeList.slice()
+        this.state.data.forEach(element => {
+          tmpArray.push(element.code)
+        });
+        this.setState({stateCodeList : tmpArray})
+        this.getSelectedCountryNumber(tmpArray[0])
+    }
+    
+    getSelectedCountryNumber = (value) => {
+        this.state.data.forEach(element => {
+        if(element.code == value) {
+            this.setState({selectedCountryNumber : element.dial_code}) 
+        }
+        });
+    }
+    
+    _dropdown_3_adjustFrame(style) {
+        console.log(`frameStyle={width:${style.width}, height:${style.height}, top:${style.top}, left:${style.left}, right:${style.right}}`);
+        style.left -= 7;
+        return style;
+    }
+    
+    componentDidMount() {
+        this.getCountryCode()
+    }
+
     static navigationOptions = {
         header : null
     }
@@ -34,22 +70,35 @@ export default class SignUp_PhoneNumber extends Component{
         const showNameNavigationAction = NavigationActions.navigate({
             routeName : 'SignUp_Name'
         })
+
+        const showLoginNavigationAction = NavigationActions.reset({
+            index: 0,
+            actions: [NavigationActions.navigate({ routeName: 'LogIn' })],
+        });
+
         const config = {
 
         }
 
         return(
             <SafeAreaView style = {styles.container} >
+            
                 <Text style = { styles.captionLabelProperties }>What's Your Mobile Number?</Text>
                 <View style = {styles.inputContainerView}>
-                    <Button 
-                        style = {styles.countryDropDownBttn}
-                        title = "Dpdn" 
-                        onPress = {this._onPressDrpDwnButton.bind(this)}
+                    <ModalDropdown 
+                        style     = {styles.countryDropDownBttn}
+                        textStyle = {{fontSize : 15}}
+                        defaultValue={this.state.stateCodeList[0]}
+                        dropdownStyle={styles.dropdownStyle}
+                        adjustFrame={style => this._dropdown_3_adjustFrame(style)}
+                        options = {this.state.stateCodeList}
+                        dropdownTextStyle = {{ textAlign : 'center' }}
+                        onSelect = {(index, value) => this.getSelectedCountryNumber(value)}
                     />
-                    <Text style = {styles.countryCodeTxt}>+91</Text>
+                    <Text style = {styles.countryCodeTxt}>{this.state.selectedCountryNumber}</Text>
                     <TextInput style = {styles.inputText}
-                    placeholder = "Enter your mobile number" returnKeyType = 'next' onSubmitEditing = {()=> this.props.navigation.dispatch(showNameNavigationAction) }
+                        placeholder = "Enter your mobile number" returnKeyType = 'next' onSubmitEditing = {()=> this.props.navigation.dispatch(showNameNavigationAction)}
+                        //keyboardType = "phone-pad"
                     />
                 </View>
                 <Text style = {styles.instructionText}>You'll use this number when you log in and if you ever need to reset your password.</Text>
@@ -57,6 +106,9 @@ export default class SignUp_PhoneNumber extends Component{
                     <Text style = {styles.emailBtnContents}
                           onPress= {()=> this.props.navigation.dispatch(showEmailNavigationAction)} >Use your email address</Text>
                 </View>
+                <TouchableOpacity onPress = {()=>  this.props.navigation.dispatch(showLoginNavigationAction)} style = {styles.alreadyHaveAccount}> 
+                    <Text style = {{ color : 'rgba(66,109,159,0.8)',fontSize : 15,fontWeight :'600'}}> Already have an account? </Text>
+                </TouchableOpacity>
             </SafeAreaView>
         );
     }
@@ -94,13 +146,21 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start'
     },
     countryDropDownBttn : {
+        flex : 0.7,
+        alignSelf: 'center',
+        alignItems : 'center',
+    },
+    dropdownStyle: {
         flex : 1,
-        color : 'red',
+        height: 250,
+        borderColor: 'black',
+        borderRadius: 3,
+        borderWidth :0
     },
     countryCodeTxt : {
         flex :1.5,
         textAlign : 'center',
-        paddingTop : 6
+        alignSelf: 'center',
     },
     inputText : {
         flex :6,
@@ -125,5 +185,17 @@ const styles = StyleSheet.create({
         color : '#4E5665',
         fontSize : 16, 
         textAlign : 'center'
+    },
+    alreadyHaveAccount : {
+        borderTopWidth : 1.8,
+        borderTopColor:'rgba(76,87,100,0.2)', 
+        width : '100%',
+        height : 45,
+        position: 'absolute',
+        bottom:0,
+        backgroundColor : 'transparent',
+        alignItems:'center',
+        justifyContent:'center',
+        borderRadius:6
     }
 });
