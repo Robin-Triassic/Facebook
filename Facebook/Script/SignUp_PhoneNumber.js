@@ -16,6 +16,19 @@ import GestureRecognizer,{swipeDirectons} from 'react-native-swipe-gestures'
 
 const { width, height } = Dimensions.get('window');
 const equalWidth =  (width / 3 );
+const showEmailNavigationAction = NavigationActions.reset({
+    index:1,
+    actions : [NavigationActions.navigate({routeName:'JoinFB'}),NavigationActions.navigate({routeName:'SignUpEmailId'})]
+})
+
+const showNameNavigationAction = NavigationActions.navigate({
+    routeName : 'SignUp_Name'
+})
+
+const showLoginNavigationAction = NavigationActions.reset({
+    index: 0,
+    actions: [NavigationActions.navigate({ routeName: 'LogIn' })],
+});
 
 
 
@@ -23,7 +36,7 @@ export default class SignUp_PhoneNumber extends Component{
 
     constructor(props) {
         super(props)
-        this.state = { data : Data, stateCodeList : [], selectedCountryNumber : '', phoneNumber : ''}
+        this.state = { data : Data, stateCodeList : [], selectedCountryNumber : '', inputedNumber: '', phoneNumber : '', isValidPhoneNumber : true}
     }
 
     getCountryCode = () => {
@@ -59,22 +72,9 @@ export default class SignUp_PhoneNumber extends Component{
     didSwipeRight(gestureState){
         this.props.navigation.pop(1)
     }
+
     render() {
-        console.log('Signup phone number')
-    
-        const showEmailNavigationAction = NavigationActions.reset({
-            index:1,
-            actions : [NavigationActions.navigate({routeName:'JoinFB'}),NavigationActions.navigate({routeName:'SignUpEmailId'})]
-        })
-
-        const showNameNavigationAction = NavigationActions.navigate({
-            routeName : 'SignUp_Name'
-        })
-
-        const showLoginNavigationAction = NavigationActions.reset({
-            index: 0,
-            actions: [NavigationActions.navigate({ routeName: 'LogIn' })],
-        });
+        //console.log('Signup phone number')
 
         const config = {
 
@@ -96,8 +96,12 @@ export default class SignUp_PhoneNumber extends Component{
                         onSelect = {(index, value) => this.getSelectedCountryNumber(value)}
                     />
                     <Text style = {styles.countryCodeTxt}>{this.state.selectedCountryNumber}</Text>
-                    <TextInput style = {styles.inputText}
-                        placeholder = "Enter your mobile number" returnKeyType = 'next' onSubmitEditing = {()=> this.props.navigation.dispatch(showNameNavigationAction)}
+                    <TextInput style = {this.state.isValidPhoneNumber ? styles.phoneNumberRightFormat : styles.phoneNumberWrongFormat}
+                        placeholder = "Enter your mobile number" 
+                        returnKeyType = 'next' 
+                        autoCorrect = {false}
+                        onChangeText = {(text) => this._onChangeValue(text)}
+                        onSubmitEditing = {()=> this._onSubmiting()}
                         //keyboardType = "phone-pad"
                     />
                 </View>
@@ -112,12 +116,35 @@ export default class SignUp_PhoneNumber extends Component{
             </SafeAreaView>
         );
     }
-    _onPressDrpDwnButton() {
-        Alert.alert("Drop Down button has been tapped")
+
+    _onSubmitPhoneNumber() {
+        this.props.navigation.dispatch(showNameNavigationAction)
     }
-    _onPressEmailConfirmation() {
-        Alert.alert("Email address has been tapped")
-    }
+
+    _onSubmiting() {
+        console.log("_onSubmiting()")
+        let val = this.state.inputedNumber.slice()
+        console.log("The entered number is: "+val)
+        if(this.validatePhoneNumber(val) == true) {
+          this.setState({phoneNumber : val})
+          this.setState({isValidPhoneNumber : true})
+          this._onSubmitPhoneNumber()
+        }
+        else {
+          this.setState({isValidPhoneNumber : false})
+        }
+      }
+    
+      _onChangeValue(val) {
+        console.log("_onChangeValue()")
+        this.setState({inputedNumber : val});
+        this.setState({isValidPhoneNumber : true})
+      }
+    
+      validatePhoneNumber = (phoneNumber) => {
+        var re = /^\d{10}$/;
+            return re.test(phoneNumber)
+      }
 }
 
 
@@ -162,9 +189,18 @@ const styles = StyleSheet.create({
         textAlign : 'center',
         alignSelf: 'center',
     },
-    inputText : {
+    phoneNumberRightFormat : {
+        borderWidth : 0,
         flex :6,
         padding : 5,
+        color : 'blue'
+    },
+    phoneNumberWrongFormat : {
+        borderWidth : 0.5,
+        borderColor : 'red',
+        flex :6,
+        padding : 5,
+        color : 'blue'
     },
     instructionText : {
         width : '90%',
