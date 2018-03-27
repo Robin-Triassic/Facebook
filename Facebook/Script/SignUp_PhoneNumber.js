@@ -16,6 +16,7 @@ import GestureRecognizer,{swipeDirectons} from 'react-native-swipe-gestures'
 
 const { width, height } = Dimensions.get('window');
 const equalWidth =  (width / 3 );
+
 const showEmailNavigationAction = NavigationActions.reset({
     index:1,
     actions : [NavigationActions.navigate({routeName:'JoinFB'}),NavigationActions.navigate({routeName:'SignUpEmailId'})]
@@ -57,7 +58,6 @@ export default class SignUp_PhoneNumber extends Component{
     }
     
     _dropdown_3_adjustFrame(style) {
-        console.log(`frameStyle={width:${style.width}, height:${style.height}, top:${style.top}, left:${style.left}, right:${style.right}}`);
         style.left -= 7;
         return style;
     }
@@ -74,7 +74,6 @@ export default class SignUp_PhoneNumber extends Component{
     }
 
     render() {
-        //console.log('Signup phone number')
 
         const config = {
 

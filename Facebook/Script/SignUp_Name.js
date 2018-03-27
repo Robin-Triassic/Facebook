@@ -10,6 +10,10 @@ import {View,
     Alert} from 'react-native'
 import {StackNavigator,NavigationActions} from 'react-navigation'
 
+const showNameNavigationAction = NavigationActions.navigate({
+    routeName : 'SignUp_Password'
+})
+
 export default class SignUp_Name extends Component{
     static navigationOptions = {
         header : null
@@ -63,6 +67,7 @@ class SignUpDetails extends Component{
                     placeholderTextColor="rgb(211,211,211)"
                     onChangeText={(text) => this.setState({lastName: text})}
                     value={this.state.lastName} 
+                    onSubmitEditing = {() => this._onSubmitName()}
                     >
                 </TextInput>
                 </View>
@@ -74,6 +79,10 @@ class SignUpDetails extends Component{
                 
             </View>
         )
+    }
+
+    _onSubmitName() {
+        this.props.navigation.dispatch(showNameNavigationAction)
     }
 }
 
