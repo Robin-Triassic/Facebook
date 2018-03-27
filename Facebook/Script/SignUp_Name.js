@@ -55,13 +55,13 @@ class SignUpDetails extends Component{
                 <TextInput style = {styles.TextFieldView}
                     placeholder="First Name"
                     placeholderTextColor="rgb(211,211,211)"
-                    onChangeText={(text) => this.setState({firstName})}
+                    onChangeText={(text) => this.setState({firstName: text})}
                     value={this.state.firstName} >
                 </TextInput>
                 <TextInput style = {styles.TextFieldView}
                     placeholder="Last Name"
                     placeholderTextColor="rgb(211,211,211)"
-                    onChangeText={(text) => this.setState({lastName})}
+                    onChangeText={(text) => this.setState({lastName: text})}
                     value={this.state.lastName} 
                     >
                 </TextInput>
