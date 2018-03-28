@@ -31,6 +31,7 @@ export default class SignUp_Password extends Component {
                 placeholder = 'Password'
                 autoCorrect = {false}
                 autoCapitalize = 'none'
+                maxLength = {20}
                 onChangeText = {(text) => this._onTextChange(text)}
                 onSubmitEditing = {() => this._onSubmit()}
                 />
@@ -65,7 +66,7 @@ export default class SignUp_Password extends Component {
   }
 
   _validatePassword(val){
-    let regex = /^(?=.*\d+)(?=.*[a-zA-Z])(?=.*[!&])[0-9a-zA-Z!&]{6,10}$/
+    let regex = /^(?=.*\d+)(?=.*[a-zA-Z])(?=.*[!&])[0-9a-zA-Z!&]{6,20}$/
       return regex.test(val)
   }
 }
