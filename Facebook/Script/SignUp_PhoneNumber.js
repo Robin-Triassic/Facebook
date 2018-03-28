@@ -37,7 +37,13 @@ export default class SignUp_PhoneNumber extends Component{
 
     constructor(props) {
         super(props)
-        this.state = { data : Data, stateCodeList : [], selectedCountryNumber : '', inputedNumber: '', phoneNumber : '', isValidPhoneNumber : true}
+        this.state = {  data : Data, 
+                        stateCodeList : [], 
+                        selectedCountryNumber : '', 
+                        inputedNumber: '', 
+                        phoneNumber : '', 
+                        isValidPhoneNumber : true, 
+                        user:this.props.navigation.state.params.user }
     }
 
     getCountryCode = () => {
@@ -61,10 +67,6 @@ export default class SignUp_PhoneNumber extends Component{
         style.left -= 7;
         return style;
     }
-    
-    componentDidMount() {
-        this.getCountryCode()
-    }
 
     static navigationOptions = {
         header : null
@@ -72,13 +74,10 @@ export default class SignUp_PhoneNumber extends Component{
     didSwipeRight(gestureState){
         this.props.navigation.pop(1)
     }
-    constructor(props){
-        super(props)
-        console.log('phone num constructor')
-        this.state = {user:this.props.navigation.state.params.user}
-    }
+
     componentDidMount(){
         console.log('Phon number page did mount')
+        this.getCountryCode()
         console.log(this.state.user)
     }
     render() {     
