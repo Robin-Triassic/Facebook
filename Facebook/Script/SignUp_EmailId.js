@@ -15,6 +15,7 @@ import SignUpContainer from './SignUpContainer'
 export default class SignUp_EmailId extends Component{
     constructor(render){
         super(render)
+        this.state = {user:this.props.navigation.state.params.user}
     }
     static navigationOptions = {
         header : null
@@ -23,6 +24,8 @@ export default class SignUp_EmailId extends Component{
         this.props.navigation.pop(1)
     }
     render(){
+        console.log('email page render')
+        console.log(this.state)
         const config  = {
             velocityThreshold:0.3,
             directionalOffsetThreshold : 10
@@ -48,15 +51,13 @@ class SignUpDetails extends Component{
 
     constructor(props) {
         super(props);
-        this.state = {
-            text: ''
-        };
+        this.state = {user:this.props.navigation.state.params.user}
     }
     render(){
 
         const showPhoneNumberNavigationAction = NavigationActions.reset({
             index:1,
-            actions:[NavigationActions.navigate({routeName:'JoinFB'}),NavigationActions.navigate({routeName:'SignUp_PhoneNumber'})]                
+            actions:[NavigationActions.navigate({routeName:'JoinFB',params:{user:this.state.user}}),NavigationActions.navigate({routeName:'SignUp_PhoneNumber',params:{user:this.state.user}})]                
         })
         
         const navigateToNameScreenAction = NavigationActions.push({

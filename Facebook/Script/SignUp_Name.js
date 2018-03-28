@@ -14,6 +14,17 @@ export default class SignUp_Name extends Component{
     static navigationOptions = {
         header : null
     }
+    constructor(props){
+        super(props)
+        this.state = {user:this.props.navigation.state.params.user}
+        console.log('name constructor')
+        console.log(this.props.navigation)
+    }
+    componentDidMount(){
+        console.log('Signup name did mount')
+        console.log(this.state.user)
+    }
+
     render(){
         return(
             <SafeAreaView style = {{flex:1}}>

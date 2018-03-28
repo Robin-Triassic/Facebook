@@ -23,21 +23,29 @@ export default class SignUp_PhoneNumber extends Component{
     didSwipeRight(gestureState){
         this.props.navigation.pop(1)
     }
-    render() {
-        console.log('Signup phone number')
-    
+    constructor(props){
+        super(props)
+        console.log('phone num constructor')
+        this.state = {user:this.props.navigation.state.params.user}
+    }
+    componentDidMount(){
+        console.log('Phon number page did mount')
+        console.log(this.state.user)
+    }
+    render() {     
         const showEmailNavigationAction = NavigationActions.reset({
             index:1,
-            actions : [NavigationActions.navigate({routeName:'JoinFB'}),NavigationActions.navigate({routeName:'SignUpEmailId'})]
+            actions : [NavigationActions.navigate({routeName:'JoinFB',params:{user:this.state.user}}),NavigationActions.navigate({routeName:'SignUpEmailId',params : {user:this.state.user}})],
+           
         })
 
         const showNameNavigationAction = NavigationActions.navigate({
-            routeName : 'SignUp_Name'
+            routeName : 'SignUp_Name',
+            params : {user:this.state.user}
         })
         const config = {
 
         }
-
         return(
             <SafeAreaView style = {styles.container} >
                 <Text style = { styles.captionLabelProperties }>What's Your Mobile Number?</Text>
@@ -49,7 +57,10 @@ export default class SignUp_PhoneNumber extends Component{
                     />
                     <Text style = {styles.countryCodeTxt}>+91</Text>
                     <TextInput style = {styles.inputText}
-                    placeholder = "Enter your mobile number" returnKeyType = 'next' onSubmitEditing = {()=> this.props.navigation.dispatch(showNameNavigationAction) }
+                    placeholder = "Enter your mobile number" returnKeyType = 'next' onSubmitEditing = {()=> {
+                        this.state.user.phoneNumber = '123456'
+                        this.props.navigation.dispatch(showNameNavigationAction) }
+                    }
                     />
                 </View>
                 <Text style = {styles.instructionText}>You'll use this number when you log in and if you ever need to reset your password.</Text>

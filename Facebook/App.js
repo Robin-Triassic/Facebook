@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View ,Component} from 'react-native';
 import JoinFacebookScreen from './Script/JoinFacebook'
 import {StackNavigator} from 'react-navigation'
 import SignUp1 from './Script/SignUp1'
@@ -9,8 +9,7 @@ import SignUp_EmailId from './Script/SignUp_EmailId'
 import SignUp_Name from './Script/SignUp_Name'
 import SignUp_Gender from './Script/SignUp_Gender'
 import SignUp_DOB from './Script/SignUp_DOB'
-
-
+import InitialComponent from './Script/InitialComponent'
 export default StackNavigator({
   JoinFB : {screen:JoinFacebookScreen},
   SignUp1 : {screen : SignUp1},
@@ -21,6 +20,14 @@ export default StackNavigator({
   SignUp_Gender : {screen : SignUp_Gender},
   SignUp_DOB : {screen:SignUp_DOB}
 })
+
+// export default class App extends Component{
+//   render(){
+//     return(
+//       <InitialComponent/>
+//     )
+//   }
+// }
 
 const styles = StyleSheet.create({
   container: {
