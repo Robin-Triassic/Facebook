@@ -46,6 +46,7 @@ export default class SignUp_PhoneNumber extends Component{
                         user:this.props.navigation.state.params.user }
     }
 
+
     getCountryCode = () => {
         var tmpArray = this.state.stateCodeList.slice()
         this.state.data.forEach(element => {
