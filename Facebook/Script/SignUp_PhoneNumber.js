@@ -72,6 +72,7 @@ export default class SignUp_PhoneNumber extends Component{
     static navigationOptions = {
         header : null
     }
+
     didSwipeRight(gestureState){
         this.props.navigation.pop(1)
     }
@@ -81,19 +82,13 @@ export default class SignUp_PhoneNumber extends Component{
         this.getCountryCode()
         console.log(this.state.user)
     }
+
     render() {     
         const showEmailNavigationAction = NavigationActions.reset({
             index:1,
             actions : [NavigationActions.navigate({routeName:'JoinFB',params:{user:this.state.user}}),NavigationActions.navigate({routeName:'SignUpEmailId',params : {user:this.state.user}})],
         })
 
-        const showNameNavigationAction = NavigationActions.navigate({
-            routeName : 'SignUp_Name',
-            params : {user:this.state.user}
-        })
-        const config = {
-
-        }
         return(
             <SafeAreaView style = {styles.container} >
             
@@ -132,7 +127,11 @@ export default class SignUp_PhoneNumber extends Component{
     }
 
     _onSubmitPhoneNumber() {
-        this.props.navigation.dispatch(showNameNavigationAction)
+        const showNameNavigationAction1 = NavigationActions.navigate({
+            routeName : 'SignUp_Name',
+            params : {user:this.state.user}
+        })
+        this.props.navigation.dispatch(showNameNavigationAction1)
     }
 
     _onSubmiting() {
@@ -142,6 +141,7 @@ export default class SignUp_PhoneNumber extends Component{
         if(this.validatePhoneNumber(val) == true) {
           this.setState({phoneNumber : val})
           this.setState({isValidPhoneNumber : true})
+          this.state.user.phoneNumber = val
           this._onSubmitPhoneNumber()
         }
         else {
