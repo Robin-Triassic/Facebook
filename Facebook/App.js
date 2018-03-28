@@ -9,7 +9,9 @@ import SignUp_EmailId from './Script/SignUp_EmailId'
 import SignUp_Name from './Script/SignUp_Name'
 import SignUp_Gender from './Script/SignUp_Gender'
 import SignUp_DOB from './Script/SignUp_DOB'
-import InitialComponent from './Script/InitialComponent'
+import SignUp_Password from './Script/SignUp_Password'
+
+
 export default StackNavigator({
   JoinFB : {screen:JoinFacebookScreen},
   SignUp1 : {screen : SignUp1},
@@ -18,7 +20,8 @@ export default StackNavigator({
   SignUpEmailId: {screen:SignUp_EmailId},
   SignUp_Name : {screen : SignUp_Name},
   SignUp_Gender : {screen : SignUp_Gender},
-  SignUp_DOB : {screen:SignUp_DOB}
+  SignUp_DOB : {screen:SignUp_DOB},
+  SignUp_Password : {screen:SignUp_Password}
 })
 
 // export default class App extends Component{

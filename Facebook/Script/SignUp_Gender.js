@@ -46,25 +46,21 @@ class SignUpDetails extends Component{
         return(
             <View style = {styles.containerView}>
                 <Text style = {styles.HeadingText}>What's your Gender?</Text>
-                <View style = {{flexDirection: 'row'}}>
-                </View>
-                <TouchableOpacity 
-                    style = {styles.buttonContainer}
-                    onPress={()=>alert('Clicked Female')}>
-                    {/* <Image source={require('./female.png')}/> */}
-                    <Text>Female</Text>
-                </TouchableOpacity>
-                <TouchableOpacity 
-                    style = {styles.buttonContainer}
-                    onPress={()=>alert('Clicked Male')}>
-                    {/* <Image source={require('./male.png')}/> */}
-                    <Text>Male</Text>
-                </TouchableOpacity>
+                <View style = {{flexDirection: 'row', alignItems:'flex-start'}}>
+                    <TouchableOpacity 
+                        style = {styles.buttonContainer}
+                        onPress={()=>alert('Clicked Female')}>
+                        <Image source={require('../Images/female.png')}/>
+                    </TouchableOpacity>
+                    <TouchableOpacity 
+                        style = {styles.buttonContainer}
+                        onPress={()=>alert('Clicked Male')}>
+                        <Image source={require('../Images/male.png')}/>
+                    </TouchableOpacity>
+                </View> 
                 <Text style = {styles.defaultText}>
                     You can change this later in your settings.
                 </Text>
-                
-                
             </View>
         )
     }
@@ -74,9 +70,8 @@ const styles = StyleSheet.create({
     defaultText : {
         color : 'rgb(61,68,82)',
         textAlign: 'center', 
-        width: 320,
-        height: 80,
-        padding: 20
+        width: "50%",
+        marginTop: 100
 
     },
     linkText :{
@@ -91,11 +86,12 @@ const styles = StyleSheet.create({
     },
     buttonContainer: {
         backgroundColor: 'rgb(227,230,234)',
-        width: 140,
+        width: "50%",
         height: 40, 
         borderRadius: 5,
-        marginLeft: 5,
-        borderColor: 'black'
+        borderColor: 'black',
+        alignItems: 'center',
+        flex:0.5
 
     },
     buttonView: {
@@ -103,11 +99,13 @@ const styles = StyleSheet.create({
     },
     containerView: {
         alignItems: 'center',
+        padding: 10,
+        flexDirection: 'column'
     },
     buttonContainerView : {
         borderColor: 'rgb(180,180,180)',
         borderRadius: 2,
-        width: 300,
+        width: "50%",
         height: 40
     }
 })
