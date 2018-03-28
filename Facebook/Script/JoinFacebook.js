@@ -15,7 +15,7 @@ export default class JoinFaceBookScreen extends React.Component {
             storageBucket: "facebook-48600.appspot.com",
             messagingSenderId: "684684211810"
           };
-          if (!firebase.app.length){
+          if (firebase.apps.length == 0){
             firebase.initializeApp(config);
           }
         // firebase.auth().createUserWithEmailAndPassword('robin.jr@triassicsolutions.com','123456').then(()=>{
