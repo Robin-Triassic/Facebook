@@ -12,6 +12,7 @@ import {NavigationActions} from 'react-navigation'
 import ModalDropdown from 'react-native-modal-dropdown';
 import Data from '../assets/PhoneNumberInput/DropDown/CountryList.json';
 import GestureRecognizer,{swipeDirectons} from 'react-native-swipe-gestures'
+import SignUp_EmailId from './SignUp_EmailId';
 
 
 const { width, height } = Dimensions.get('window');
@@ -116,10 +117,10 @@ export default class SignUp_PhoneNumber extends Component{
                     />
                 </View>
                 <Text style = {styles.instructionText}>You'll use this number when you log in and if you ever need to reset your password.</Text>
-                <View style = {styles.emailBtn}>
+                {/* <View style = {styles.emailBtn}>
                     <Text style = {styles.emailBtnContents}
                           onPress= {()=> this.props.navigation.dispatch(showEmailNavigationAction)} >Use your email address</Text>
-                </View>
+                </View> */}
                 <TouchableOpacity onPress = {()=>  this.props.navigation.dispatch(showLoginNavigationAction)} style = {styles.alreadyHaveAccount}> 
                     <Text style = {{ color : 'rgba(66,109,159,0.8)',fontSize : 15,fontWeight :'600'}}> Already have an account? </Text>
                 </TouchableOpacity>
@@ -132,7 +133,11 @@ export default class SignUp_PhoneNumber extends Component{
             routeName : 'SignUp_Name',
             params : {user:this.state.user}
         })
-        this.props.navigation.dispatch(showNameNavigationAction1)
+        const showEmailNavigationAction = NavigationActions.push({
+            routeName : 'SignUpEmailId',
+            params : {user:this.state.user}
+        })
+        this.props.navigation.dispatch(showEmailNavigationAction)
     }
 
     _onSubmiting() {

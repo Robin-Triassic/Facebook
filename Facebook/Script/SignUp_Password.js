@@ -1,6 +1,8 @@
 import React,{Component} from 'react';
 import {View, Alert, StyleSheet, SafeAreaView, Text, TextInput, TouchableOpacity, KeyboardAvoidingView} from 'react-native';
 import {NavigationActions} from 'react-navigation'
+import SignUp_DOB from './SignUp_DOB';
+import SignUp_Gender from './SignUp_Gender';
 
 const showLoginNavigationAction = NavigationActions.reset({
     index: 0,
@@ -9,16 +11,22 @@ const showLoginNavigationAction = NavigationActions.reset({
 
 export default class SignUp_Password extends Component {
 
-  constructor(){
-    super()
-    this.state = { enteredPassword : '', isValidPassword : true, password : ''}
+  constructor(props){
+    super(props)
+    this.state = { enteredPassword : '', isValidPassword : true, password : '',
+    user:this.props.navigation.state.params.user
+  }
   }
 
   static navigationOptions = {
     header : null
   }
-
   render() {
+    const showGenderNavigationAction = NavigationActions.push({
+      routeName : 'SignUp_Gender',
+      params : {user:this.state.user}
+    })
+    
     return(
         <KeyboardAvoidingView style = {styles.container}>
            <View style = {{flex : 0.5, marginBottom : 165, width : '100%' , flexDirection :'column', justifyContent: 'center', alignItems: 'center',}}>
@@ -33,7 +41,13 @@ export default class SignUp_Password extends Component {
                 autoCapitalize = 'none'
                 maxLength = {20}
                 onChangeText = {(text) => this._onTextChange(text)}
-                onSubmitEditing = {() => this._onSubmit()}
+                onSubmitEditing = {() => {
+                  if(this._onSubmit()==true){
+                    this.state.user.password = this.state.enteredPassword
+                    this.props.navigation.dispatch(showGenderNavigationAction)
+                  }
+                }
+                }
                 />
                 <Text style = {this.state.isValidPassword ? styles.instructionText : styles.instructionTextOnError}>
                     Enter a combibnation of atleast six numbers, letters and punctuation marks (like ! and &).
@@ -54,8 +68,9 @@ export default class SignUp_Password extends Component {
 
     let val = this.state.enteredPassword.slice()
     if(this._validatePassword(val) == true) {
-      alert("Validation Successful")
+      this.state.user.password = val
       this.setState({password : val, isValidPassword : true})
+      return true
     }
     else if(val == ''){
         this.setState({isValidPassword : true})
@@ -63,6 +78,7 @@ export default class SignUp_Password extends Component {
     else {
       this.setState({password : '' ,isValidPassword : false})
     }
+    return false
   }
 
   _validatePassword(val){

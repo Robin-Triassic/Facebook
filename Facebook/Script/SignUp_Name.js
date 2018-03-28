@@ -9,10 +9,8 @@ import {View,
     Button,
     Alert} from 'react-native'
 import {StackNavigator,NavigationActions} from 'react-navigation'
+import SignUp_Password from './SignUp_Password';
 
-const showNameNavigationAction = NavigationActions.navigate({
-    routeName : 'SignUp_Password'
-})
 
 export default class SignUp_Name extends Component{
     static navigationOptions = {
@@ -55,13 +53,18 @@ class SignUpDetails extends Component{
         super(props);
         this.state = {
             firstName: '',
-            lastName: ''
+            lastName: '',
+            user:this.props.navigation.state.params.user
         };
     }
     render(){
         const showDOBNavigationAction = NavigationActions.reset({
             index : 0,
-            actions : [NavigationActions.navigate({routeName:'SignUp_DOB'})]
+            actions : [NavigationActions.navigate({routeName:'SignUp_DOB',params : {user:this.state.user}})]
+        })
+        const showPasswordNavigationAction = NavigationActions.push({
+            routeName : 'SignUp_Password',
+            params:{user:this.state.user}
         })
         return(
             <View style = {styles.containerView}>
@@ -78,7 +81,13 @@ class SignUpDetails extends Component{
                     placeholderTextColor="rgb(211,211,211)"
                     onChangeText={(text) => this.setState({lastName: text})}
                     value={this.state.lastName} 
-                    onSubmitEditing = {() => this._onSubmitName()}
+                    onSubmitEditing = {() => 
+                        {
+                            this.state.user.firstName = this.state.firstName
+                            this.state.user.lastName = this.state.lastName
+                            this.props.navigation.dispatch(showPasswordNavigationAction)
+                        }
+                    }
                     >
                 </TextInput>
                 </View>
@@ -92,9 +101,6 @@ class SignUpDetails extends Component{
         )
     }
 
-    _onSubmitName() {
-        this.props.navigation.dispatch(showNameNavigationAction)
-    }
 }
 
 const styles = StyleSheet.create({

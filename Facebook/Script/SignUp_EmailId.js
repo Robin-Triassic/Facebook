@@ -62,6 +62,7 @@ class SignUpDetails extends Component{
         
         const navigateToNameScreenAction = NavigationActions.push({
             routeName : 'SignUp_Name',
+            params : {user:this.state.user}
         })
 
         return(
@@ -74,21 +75,39 @@ class SignUpDetails extends Component{
                     onChangeText={(text) => this.setState({text})}
                     value={this.state.text} 
                     returnKeyType = 'next'
-                    onSubmitEditing = {()=>this.props.navigation.dispatch(navigateToNameScreenAction)}
+                    onSubmitEditing = {()=>{
+                        if(this.ValidateEmail(this.state.text)){
+                            this.state.user.emailId = this.state.text
+                           this.props.navigation.dispatch(navigateToNameScreenAction)
+                        }
+                        else{
+                            Alert.alert('Invalid Mail Id')
+                        }
+                    }
+                    }
                     >
                 </TextInput>
                 <Text style = {styles.defaultText}>You'll use this email when you log in and if you ever need to reset to your password.</Text>
-                <View style = {styles.buttonContainerView}> 
+                {/* <View style = {styles.buttonContainerView}> 
                     <Button style = {styles.Button}
                         onPress={()=>this.props.navigation.dispatch(showPhoneNumberNavigationAction)}
                         title="Use your mobile number"
                         color="rgb(61,68,82)"    
                     />
-                </View>
+                </View> */}
                 
             </View>
         )
     }
+  
+    ValidateEmail(mail) {
+        var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        if(mail.match(mailformat)){
+            return true
+        }
+        return (false)
+    }
+
 }
 
 const styles = StyleSheet.create({

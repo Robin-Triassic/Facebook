@@ -1,5 +1,5 @@
 import React , {Component} from 'react'
-import {SafeAreaView,View,Text,Image,StyleSheet,AppRegistry,TouchableOpacity,TextInput,TextInputAndroidProperties} from 'react-native'
+import {SafeAreaView,View,Text,Image,StyleSheet,AppRegistry,TouchableOpacity,TextInput,TextInputAndroidProperties,Alert} from 'react-native'
 import {StackNavigator,NavigationActions} from 'react-navigation'
 import firebase from 'firebase'
 
@@ -65,9 +65,16 @@ export default class LogIn extends Component{
         )
     }
     performLogin(){
-         firebase.auth().signInWithEmailAndPassword('robin.jr@triassicsolutions.com','123456').then((response)=>{
+         firebase.auth().signInWithEmailAndPassword(this.state.userId,this.state.password).then((response)=>{
             console.log(response)
-        }).then((error)=>{
+            if(!response.emailVerified){
+                Alert.alert('Email is not verified')
+            }
+            else{
+                Alert.alert('Valid User : ' + response.email)
+            }
+        }).catch((error)=>{
+            //Alert.alert(error)
             console.log(error)
         })
     }
