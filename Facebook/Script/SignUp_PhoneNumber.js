@@ -108,6 +108,7 @@ export default class SignUp_PhoneNumber extends Component{
                     <TextInput style = {this.state.isValidPhoneNumber ? styles.phoneNumberRightFormat : styles.phoneNumberWrongFormat}
                         placeholder = "Enter your mobile number" 
                         returnKeyType = 'next' 
+                        maxLength = {10}
                         autoCorrect = {false}
                         onChangeText = {(text) => this._onChangeValue(text)}
                         onSubmitEditing = {()=> this._onSubmiting()}
