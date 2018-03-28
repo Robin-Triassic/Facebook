@@ -17,19 +17,19 @@ import GestureRecognizer,{swipeDirectons} from 'react-native-swipe-gestures'
 const { width, height } = Dimensions.get('window');
 const equalWidth =  (width / 3 );
 
-const showEmailNavigationAction = NavigationActions.reset({
-    index:1,
-    actions : [NavigationActions.navigate({routeName:'JoinFB'}),NavigationActions.navigate({routeName:'SignUpEmailId'})]
-})
+// const showEmailNavigationAction = NavigationActions.reset({
+//     index:1,
+//     actions : [NavigationActions.navigate({routeName:'JoinFB'}),NavigationActions.navigate({routeName:'SignUpEmailId'})]
+// })
 
-const showNameNavigationAction = NavigationActions.navigate({
-    routeName : 'SignUp_Name'
-})
+// const showNameNavigationAction = NavigationActions.navigate({
+//     routeName : 'SignUp_Name'
+// })
 
-const showLoginNavigationAction = NavigationActions.reset({
-    index: 0,
-    actions: [NavigationActions.navigate({ routeName: 'LogIn' })],
-});
+// const showLoginNavigationAction = NavigationActions.reset({
+//     index: 0,
+//     actions: [NavigationActions.navigate({ routeName: 'LogIn' })],
+// });
 
 
 
