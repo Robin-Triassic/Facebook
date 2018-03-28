@@ -10,6 +10,7 @@ import SignUp_Name from './Script/SignUp_Name'
 import SignUp_Gender from './Script/SignUp_Gender'
 import SignUp_DOB from './Script/SignUp_DOB'
 import SignUp_Password from './Script/SignUp_Password'
+import Home from './Script/Home'
 
 
 export default StackNavigator({
@@ -21,7 +22,8 @@ export default StackNavigator({
   SignUp_Name : {screen : SignUp_Name},
   SignUp_Gender : {screen : SignUp_Gender},
   SignUp_DOB : {screen:SignUp_DOB},
-  SignUp_Password : {screen:SignUp_Password}
+  SignUp_Password : {screen:SignUp_Password},
+  Home : {screen : Home}
 })
 
 // export default class App extends Component{
