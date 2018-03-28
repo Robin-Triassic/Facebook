@@ -21,7 +21,7 @@ export default class SignUp_Password extends Component {
   render() {
     return(
         <KeyboardAvoidingView style = {styles.container}>
-           <View style = {{flex : 0.5, marginBottom : 150, width : '100%' , flexDirection :'column', justifyContent: 'center', alignItems: 'center',}}>
+           <View style = {{flex : 0.5, marginBottom : 165, width : '100%' , flexDirection :'column', justifyContent: 'center', alignItems: 'center',}}>
                 <Text style = {styles.captionLabel}>
                 Create a Password
                 </Text>
@@ -80,27 +80,27 @@ container : {
   },
   captionLabel : {
     color : '#4267B2',
-    marginBottom : 23,
+    marginBottom : 22,
     fontWeight : 'bold',
     fontSize : 23,
   },
   rightPassword : {
     borderWidth : 0,
-    height : '23%',
+    height : '20%',
     width : '88%',
     backgroundColor : 'white',
     borderRadius : 3,
-    fontSize : 23,
-    padding : 20
+    fontSize : 18,
+    paddingLeft : 20
   },
   wrongPassword : {
     borderWidth : 0.5,
-    height : '23%',
+    height : '20%',
     borderColor : 'red',
     width : '90%',
-    fontSize : 23,
+    fontSize : 18,
     borderRadius : 5,
-    padding : 20
+    paddingLeft : 20
   },
   instructionText : {
     width : '90%',
