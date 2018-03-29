@@ -28,7 +28,8 @@ export default class SignUp_Password extends Component {
     })
     
     return(
-        <KeyboardAvoidingView style = {styles.container}>
+        <SafeAreaView style = {{flex:1, backgroundColor:'#E9EBEE'}}>
+          <KeyboardAvoidingView style ={styles.container}>
            <View style = {{flex : 0.5, marginBottom : 165, width : '100%' , flexDirection :'column', justifyContent: 'center', alignItems: 'center',}}>
                 <Text style = {styles.captionLabel}>
                 Create a Password
@@ -56,7 +57,8 @@ export default class SignUp_Password extends Component {
             <TouchableOpacity onPress = {()=>  this.props.navigation.dispatch(showLoginNavigationAction)} style = {styles.alreadyHaveAccount}> 
                 <Text style = {{ color : 'rgba(66,109,159,0.8)',fontSize : 15,fontWeight :'600'}}> Already have an account? </Text>
             </TouchableOpacity>
-        </KeyboardAvoidingView>
+          </KeyboardAvoidingView>
+        </SafeAreaView>
     );
   }
 

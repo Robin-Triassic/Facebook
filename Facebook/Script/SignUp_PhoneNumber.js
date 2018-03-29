@@ -7,6 +7,7 @@ import {View,
         Dimensions, 
         Button, 
         TouchableOpacity,
+        KeyboardAvoidingView,
         Alert} from 'react-native';
 import {NavigationActions} from 'react-navigation'
 import ModalDropdown from 'react-native-modal-dropdown';
@@ -27,10 +28,10 @@ const equalWidth =  (width / 3 );
 //     routeName : 'SignUp_Name'
 // })
 
-// const showLoginNavigationAction = NavigationActions.reset({
-//     index: 0,
-//     actions: [NavigationActions.navigate({ routeName: 'LogIn' })],
-// });
+const showLoginNavigationAction = NavigationActions.reset({
+    index: 0,
+    actions: [NavigationActions.navigate({ routeName: 'LogIn' })],
+});
 
 
 
@@ -41,10 +42,11 @@ export default class SignUp_PhoneNumber extends Component{
         this.state = {  data : Data, 
                         stateCodeList : [], 
                         selectedCountryNumber : '', 
-                        inputedNumber: '', 
+                        inputedNumber: this.props.navigation.state.params.user.phoneNumber != null ? this.props.navigation.state.params.user.phoneNumber : '', 
                         phoneNumber : '', 
                         isValidPhoneNumber : true, 
-                        user:this.props.navigation.state.params.user }
+                        user:this.props.navigation.state.params.user 
+                     }
     }
 
 
@@ -91,8 +93,8 @@ export default class SignUp_PhoneNumber extends Component{
         })
 
         return(
-            <SafeAreaView style = {styles.container} >
-            
+            <SafeAreaView style = {{flex : 1, backgroundColor:'#E9EBEE',}} >
+                <KeyboardAvoidingView style = {styles.container} >
                 <Text style = { styles.captionLabelProperties }>What's Your Mobile Number?</Text>
                 <View style = {styles.inputContainerView}>
                     <ModalDropdown 
@@ -109,6 +111,7 @@ export default class SignUp_PhoneNumber extends Component{
                     <TextInput style = {this.state.isValidPhoneNumber ? styles.phoneNumberRightFormat : styles.phoneNumberWrongFormat}
                         placeholder = "Enter your mobile number" 
                         returnKeyType = 'next' 
+                        value = {this.state.inputedNumber}
                         maxLength = {10}
                         autoCorrect = {false}
                         onChangeText = {(text) => this._onChangeValue(text)}
@@ -125,6 +128,7 @@ export default class SignUp_PhoneNumber extends Component{
                 <TouchableOpacity onPress = {()=>  this.props.navigation.dispatch(showLoginNavigationAction)} style = {styles.alreadyHaveAccount}> 
                     <Text style = {{ color : 'rgba(66,109,159,0.8)',fontSize : 15,fontWeight :'600'}}> Already have an account? </Text>
                 </TouchableOpacity>
+                </KeyboardAvoidingView>
             </SafeAreaView>
         );
     }

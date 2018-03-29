@@ -6,6 +6,7 @@ import {View,
     StyleSheet, 
     TextInput,
     KeyboardAvoidingView,
+    TouchableOpacity,
     Button,
     Alert} from 'react-native'
 import {NavigationActions} from 'react-navigation'
@@ -13,9 +14,9 @@ import GestureRecognizer , {swipeDirections} from 'react-native-swipe-gestures'
 import SignUpContainer from './SignUpContainer'
 
 export default class SignUp_EmailId extends Component{
-    constructor(render){
-        super(render)
-        this.state = {user:this.props.navigation.state.params.user}
+    constructor(params){
+        super(params)
+        this.state = { user:this.props.navigation.state.params.user }
     }
     static navigationOptions = {
         header : null
@@ -30,7 +31,12 @@ export default class SignUp_EmailId extends Component{
             velocityThreshold:0.3,
             directionalOffsetThreshold : 10
         }
+        const showLoginNavigationAction = NavigationActions.reset({
+            index: 0,
+            actions: [NavigationActions.navigate({ routeName: 'LogIn' })],
+        });
         return(
+            <SafeAreaView style = {{flex :1, backgroundColor:'#E9EBEE',}}>
                 <KeyboardAvoidingView style = {{flex:1,
                                                 alignItems : 'center',
                                                 justifyContent : 'center',
@@ -38,6 +44,10 @@ export default class SignUp_EmailId extends Component{
                                                 backgroundColor: 'rgb(227,230,234)'}}>
                 <SignUpDetails style = {{textAlign : 'center'}} navigation = {this.props.navigation}/>
                 </KeyboardAvoidingView>
+                <TouchableOpacity onPress = {()=>  this.props.navigation.dispatch(showLoginNavigationAction)} style = {{borderTopWidth : 1.8,borderTopColor:'rgba(76,87,100,0.2)', width : '100%',height : 45,marginBottom:0,backgroundColor : 'transparent',alignItems:'center',justifyContent:'center',borderRadius:6}}> 
+                    <Text style = {{ color : 'rgba(66,109,159,0.8)',fontSize : 15,fontWeight :'600'}}> Already have an account? </Text>
+                </TouchableOpacity>
+            </SafeAreaView>
         )
     }
 }
@@ -51,7 +61,9 @@ class SignUpDetails extends Component{
 
     constructor(props) {
         super(props);
-        this.state = {user:this.props.navigation.state.params.user,text:''}
+        this.state = { user:this.props.navigation.state.params.user,
+                       enteredEmail : this.props.navigation.state.params.user.emailId == null ? '' : this.props.navigation.state.params.user.emailId
+                     }
     }
     render(){
 
@@ -71,13 +83,15 @@ class SignUpDetails extends Component{
                 <TextInput style = {styles.TextFieldView}
                     placeholder="Enter your email address"
                     placeholderTextColor="rgb(211,211,211)"
+                    autoCorrect = {false}
+                    autoCapitalize = 'none'
                     keyboardType='email-address'
-                    onChangeText={(text) => this.setState({text})}
-                    value={this.state.text} 
+                    value = {this.state.enteredEmail} 
+                    onChangeText={(text) => this.setState({enteredEmail:text})}
                     returnKeyType = 'next'
                     onSubmitEditing = {()=>{
-                        if(this.ValidateEmail(this.state.text)){
-                            this.state.user.emailId = this.state.text
+                        if(this.ValidateEmail(this.state.enteredEmail)){
+                            this.state.user.emailId = this.state.enteredEmail
                            this.props.navigation.dispatch(navigateToNameScreenAction)
                         }
                         else{
@@ -132,7 +146,7 @@ const styles = StyleSheet.create({
     TextFieldView: {
         backgroundColor : 'white',
         color : 'black',
-        fontSize: 20,
+        fontSize: 16,
         width: 300,
         height: 40,
         textAlign: 'center', 
