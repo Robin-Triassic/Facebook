@@ -6,6 +6,7 @@ import {View,
     StyleSheet, 
     TextInput,
     KeyboardAvoidingView,
+    TouchableOpacity,
     Button,
     Alert} from 'react-native'
 import {StackNavigator,NavigationActions} from 'react-navigation'
@@ -28,8 +29,13 @@ export default class SignUp_Name extends Component{
     }
 
     render(){
+        const showLoginNavigationAction = NavigationActions.reset({
+            index: 0,
+            actions: [NavigationActions.navigate({ routeName: 'LogIn' })],
+        });
+
         return(
-            <SafeAreaView style = {{flex:1}}>
+            <SafeAreaView style = {{flex:1, backgroundColor:'#E9EBEE',}}>
                 <KeyboardAvoidingView style = {{flex:1,
                                                 alignItems : 'center',
                                                 justifyContent : 'center',
@@ -37,6 +43,9 @@ export default class SignUp_Name extends Component{
                                                 backgroundColor: 'rgb(227,230,234)'}}>
                 <SignUpDetails style = {{textAlign : 'center'}} navigation = {this.props.navigation}/>
                 </KeyboardAvoidingView>
+                <TouchableOpacity onPress = {()=>  this.props.navigation.dispatch(showLoginNavigationAction)} style = {{borderTopWidth : 1.8,borderTopColor:'rgba(76,87,100,0.2)', width : '100%',height : 45,marginBottom:0,backgroundColor : 'transparent',alignItems:'center',justifyContent:'center',borderRadius:6}}> 
+                    <Text style = {{ color : 'rgba(66,109,159,0.8)',fontSize : 15,fontWeight :'600'}}> Already have an account? </Text>
+                </TouchableOpacity>
             </SafeAreaView>
         )
     }
@@ -52,8 +61,8 @@ class SignUpDetails extends Component{
     constructor(props) {
         super(props);
         this.state = {
-            firstName: '',
-            lastName: '',
+            firstName: this.props.navigation.state.params.user.firstName == null ? '' : this.props.navigation.state.params.user.firstName ,
+            lastName: this.props.navigation.state.params.user.lastName == null ? '' : this.props.navigation.state.params.user.lastName,
             user:this.props.navigation.state.params.user
         };
     }
@@ -73,6 +82,7 @@ class SignUpDetails extends Component{
                 <TextInput style = {styles.TextFieldView}
                     placeholder="First Name"
                     placeholderTextColor="rgb(211,211,211)"
+                    autoCorrect = {false}
                     onChangeText={(text) => this.setState({firstName: text})}
                     value={this.state.firstName} >
                 </TextInput>
@@ -80,6 +90,7 @@ class SignUpDetails extends Component{
                     placeholder="Last Name"
                     placeholderTextColor="rgb(211,211,211)"
                     onChangeText={(text) => this.setState({lastName: text})}
+                    autoCorrect = {false}
                     value={this.state.lastName} 
                     onSubmitEditing = {() => 
                         {
@@ -125,7 +136,7 @@ const styles = StyleSheet.create({
     TextFieldView: {
         backgroundColor : 'white',
         color : 'black',
-        fontSize: 20,
+        fontSize: 16,
         width: 140,
         height: 40,
         textAlign: 'center', 
