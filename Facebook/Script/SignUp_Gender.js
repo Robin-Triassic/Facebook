@@ -83,6 +83,7 @@ class SignUpDetails extends Component{
         var user = this.state.user
         firebase.auth().createUserWithEmailAndPassword(user.emailId,user.password).then((response)=>{
             console.log('logged User Details',firebase.auth().currentUser)
+            firebase.auth().currentUser.sendEmailVerification()
             firebase.auth().currentUser.updateProfile({
                 displayName : user.firstName + user.lastName,
                 phoneNumber : user.phoneNumber,
@@ -95,6 +96,9 @@ class SignUpDetails extends Component{
         }).catch((error)=>{
             console.log(error)
         })
+    }
+    sendVerificationMail(){
+
     }
 }
 

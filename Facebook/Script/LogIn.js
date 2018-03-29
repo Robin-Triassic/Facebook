@@ -68,16 +68,20 @@ export default class LogIn extends Component{
          firebase.auth().signInWithEmailAndPassword(this.state.userId,this.state.password).then((response)=>{
             console.log(response)
             if(!response.emailVerified){
-                Alert.alert('Email is not verified')
+                this.emailNotVerified()
             }
             else{
-                Alert.alert('Valid User : ' + response.email)
+                const showHomeNavigationAction = NavigationActions.reset({
+                    index : 0,
+                    actions : [NavigationActions.navigate({routeName:'Home'})]
+                })        
+                this.props.navigation.dispatch(showHomeNavigationAction)
             }
         }).catch((error)=>{
-            //Alert.alert(error)
             console.log(error)
         })
     }
+    
 }
 
 const MyStyles = StyleSheet.create({
