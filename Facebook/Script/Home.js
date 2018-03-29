@@ -1,42 +1,59 @@
 import React, { Component } from 'react';
 import { Text, TextInput, SafeAreaView, View, StyleSheet, Alert, FlatList } from 'react-native';
 import {NavigationActions} from 'react-navigation'
+import firebase from 'firebase'
 
 export default class Home extends Component {
 
-  constructor(){
-    super()
-    this.state = { enteredPassword : '', isValidPassword : true, password : ''}
+  constructor(props){
+    super(props)
+    this.state = {users:[{title:''}],name:'Robb',isLoading:true}
   }
-
+componentDidMount(){
+  this.getUserDetails()
+}
   static navigationOptions = {
     header : null
   }
+getUserDetails(){
 
+  console.log('Getting user Details')
+  firebase.database().ref('user').on('value', (snapshot)=> {
+    console.log(snapshot)
+   // this.setState({users:[snapshot],isLoading:false})
+    //console.log(JSON.parse(snapshot))
+  //console.log(snapshot["rETrYsZb36c6dNqKNPjGg24XDiU2"])
+  //var p =JSON.stringify(snapshot);
+  //console.log(snapshot[0]["rETrYsZb36c6dNqKNPjGg24XDiU2"])
+  });
+}
   render() {
-
-    const array = [{ "name" : "Jaseer" , "number" : "1234567890" },
-                   { "name" : "Robin" ,  "number" : "9876543210" },
-                   { "name" : "Janish" , "number" : "7418529630" },
-                   { "name" : "Visakh" , "number" : "9638527410" },
-                  ]
-
+  if(this.state.isLoading){
+return(
+  <SafeAreaView style = {{flex:1}}>
+  <Text>Loading</Text>
+    </SafeAreaView>
+)
+  }
+  else{
     return(
         <SafeAreaView style = {styles.container}>
-          <FlatList 
+          { <FlatList 
                     style = {{flex:1, width:'100%', alignContent: 'flex-start'}}
-                    data = {array}
+                    data = {this.state.users}
                     renderItem = {({item , index}) => this._renderItem(item )}
                     keyExtractor = {(item, index) => index.toString()}
-          />
+          /> }
         </SafeAreaView>
     );
   }
+}
 
   _renderItem(item ){
+    console.log('render Item',item)
       return(
         <View style={{ borderBottomWidth: 0.75, borderBottomColor : 'gray', flex: 1 , paddingLeft : 10} }>
-          <Text style = {styles.listItemDisplayStyle}> {item.name} - {item.number}</Text>
+          <Text style = {styles.listItemDisplayStyle}> {item.value} - {item.number}</Text>
         </View>
       );
   }

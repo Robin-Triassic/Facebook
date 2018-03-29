@@ -65,6 +65,8 @@ export default class LogIn extends Component{
         )
     }
     performLogin(){
+        this.state.userId = 'robin.jr@triassicsolutions.com'
+        this.state.password = '123456&abc'
          firebase.auth().signInWithEmailAndPassword(this.state.userId,this.state.password).then((response)=>{
             console.log(response)
             if(!response.emailVerified){
@@ -79,7 +81,11 @@ export default class LogIn extends Component{
             }
         }).catch((error)=>{
             console.log(error)
+            Alert.alert('Please check User Details')
         })
+    }
+    emailNotVerified(){
+        Alert.alert('Please verify your email Id and Login')
     }
     
 }

@@ -113,6 +113,7 @@ export default class SignUp_PhoneNumber extends Component{
                         autoCorrect = {false}
                         onChangeText = {(text) => this._onChangeValue(text)}
                         onSubmitEditing = {()=> this._onSubmiting()}
+                        underlineColorAndroid = 'transparent'
                         //keyboardType = "phone-pad"
                     />
                 </View>

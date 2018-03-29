@@ -51,7 +51,7 @@ class SignUpDetails extends Component{
 
     constructor(props) {
         super(props);
-        this.state = {user:this.props.navigation.state.params.user}
+        this.state = {user:this.props.navigation.state.params.user,text:''}
     }
     render(){
 

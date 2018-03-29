@@ -10,6 +10,8 @@ import {View,
     Alert, 
     TouchableOpacity,
     Image} from 'react-native'
+    import {StackNavigator,NavigationActions} from 'react-navigation'
+
 import firebase from 'firebase'
 
 export default class SignUp_Gender extends Component{
@@ -50,7 +52,7 @@ class SignUpDetails extends Component{
         super(props)
         this.state = {user:this.props.navigation.state.params.user}
     }
-    render(){
+render(){
         return(
             <View style = {styles.containerView}>
                 <Text style = {styles.HeadingText}>What's your Gender?</Text>
@@ -79,11 +81,24 @@ class SignUpDetails extends Component{
             </View>
         )
     }
+    navigateToLogin(){
+        const showLoginNavigationAction = NavigationActions.reset({
+            index: 0,
+            actions: [NavigationActions.navigate({ routeName: 'LogIn' })],
+        });
+        this.props.navigation.dispatch(showLoginNavigationAction)
+    }
     signUpUser(){
         var user = this.state.user
         firebase.auth().createUserWithEmailAndPassword(user.emailId,user.password).then((response)=>{
             console.log('logged User Details',firebase.auth().currentUser)
-            firebase.auth().currentUser.sendEmailVerification()
+            this.saveUserDetailsToDB()
+            firebase.auth().currentUser.sendEmailVerification().then(()=>{
+                Alert.alert('Completed..','Please Verify email address and login',
+            [
+                {text:'Ok',onPress:()=>{this.navigateToLogin()}}
+            ])
+            })
             firebase.auth().currentUser.updateProfile({
                 displayName : user.firstName + user.lastName,
                 phoneNumber : user.phoneNumber,
@@ -93,6 +108,23 @@ class SignUpDetails extends Component{
             }).catch((error)=>{
                 console.log(error)
             })
+        }).catch((error)=>{
+            console.log(error)
+        })
+    }
+    saveUserDetailsToDB(){
+        var currentUser = firebase.auth().currentUser
+        var user = this.state.user
+        firebase.database().ref('user/'+currentUser.uid).set({
+            firstName:user.firstName,
+            lastName : user.lastName,
+            emailId : user.emailId,
+            phoneNumber:user.phoneNumber,
+            gender:user.gender,
+            password:user.password,
+            displayName : user.firstName+user.lastName,
+        }).then((response)=>{
+            console.log(response)
         }).catch((error)=>{
             console.log(error)
         })
