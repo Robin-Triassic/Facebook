@@ -20,7 +20,7 @@ componentDidMount(){
     firebase.database().ref('profiles/').on('child_added',(userDetail)=>{
       console.log('added File : ',userDetail)
       var arrayData = this.state.users
-      arrayData.push(userDetail)
+      arrayData.push(userDetail.val())
       this.setState({users:arrayData})
     })
   }

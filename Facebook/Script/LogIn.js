@@ -85,8 +85,6 @@ export default class LogIn extends Component{
         })
     }
     performLogin(){
-        this.state.userId = 'robin.jr@triassicsolutions.com'
-        this.state.password = '123456&abc'
          firebase.auth().signInWithEmailAndPassword(this.state.userId,this.state.password).then((response)=>{
             console.log(response)
             if(!response.emailVerified){
