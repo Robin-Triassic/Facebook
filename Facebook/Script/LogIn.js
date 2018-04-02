@@ -53,7 +53,10 @@ export default class LogIn extends Component{
              style = {{backgroundColor : 'rgb(66,109,169)',height : 45,alignItems : 'center',justifyContent : 'center',marginTop : 22}}>
                 <Text style = {{color : 'rgba(255,255,255,0.4)',fontWeight : 'bold'}}> LOG IN </Text>
             </TouchableOpacity>
-            <Text onPress = {()=>console.log('password forgot')} style = {{color:'rgb(66,109,169)',textAlign:'center',paddingTop : 20,fontWeight : 'bold'}}>FORGOTTEN PASSWORD?</Text>
+            <Text onPress = {()=>{
+                this.saveProfileInfo()
+            }
+            } style = {{color:'rgb(66,109,169)',textAlign:'center',paddingTop : 20,fontWeight : 'bold'}}>FORGOTTEN PASSWORD?</Text>
 
             </View>
             <TouchableOpacity onPress = {()=> this.props.navigation.dispatch(showInitialFBNavigationAction)}
@@ -63,6 +66,23 @@ export default class LogIn extends Component{
             </View>
             </SafeAreaView>
         )
+    }
+    saveProfileInfo(){
+        console.log('password forgot')
+        firebase.database().ref('profiles/').push().set({
+            firstName:'f Name1',
+            lastName : 'l name1',
+            emailId : 'user.emailId',
+            phoneNumber:'user.phoneNumber',
+            gender:'user.gender',
+            password:'user.password',
+            displayName : 'user_firstName+user.lastName',
+            uId : 'currentUser_uid'
+        }).then((response)=>{
+            console.log(response)
+        }).catch((error)=>{
+            console.log(error)
+        })
     }
     performLogin(){
         this.state.userId = 'robin.jr@triassicsolutions.com'

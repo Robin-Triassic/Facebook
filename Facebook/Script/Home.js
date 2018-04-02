@@ -10,17 +10,45 @@ export default class Home extends Component {
     this.state = {users:[{title:''}],name:'Robb',isLoading:true}
   }
 componentDidMount(){
+  this.addUserListener()
   this.getUserDetails()
 }
   static navigationOptions = {
     header : null
   }
+  addUserListener(){
+    firebase.database().ref('profiles/').on('child_added',(userDetail)=>{
+      console.log('added File : ',userDetail)
+      var arrayData = this.state.users
+      arrayData.push(userDetail)
+      this.setState({users:arrayData})
+    })
+  }
 getUserDetails(){
 
   console.log('Getting user Details')
-  firebase.database().ref('user').on('value', (snapshot)=> {
-    console.log(snapshot)
-   // this.setState({users:[snapshot],isLoading:false})
+
+  firebase.database().ref('profiles/').once('value', (userDetails)=> {
+    console.log('All USer : ',userDetails)
+    var arrayData = []
+    userDetails.forEach((fbUser)=>{
+      arrayData.push(fbUser.val())
+      var childKey = fbUser.key
+      var fbUserData = fbUser.val()
+      console.log('user data : ',fbUserData)
+      var displayName = fbUserData.displayName
+      console.log('display Name :',displayName)
+    })
+
+     this.setState({users:arrayData,isLoading:false})
+    // console.log('name : ',userDetails.val().displayName)
+    // for(let fbUser of this.state.users){
+    //   console.log('inside loop')
+    //   var key = 'rETrYsZb36c6dNqKNPjGg24XDiU2'
+    //   console.log(fbUser.key)
+    // }
+
+
     //console.log(JSON.parse(snapshot))
   //console.log(snapshot["rETrYsZb36c6dNqKNPjGg24XDiU2"])
   //var p =JSON.stringify(snapshot);
@@ -50,10 +78,13 @@ return(
 }
 
   _renderItem(item ){
-    console.log('render Item',item)
+   // console.log(item.userId.displayName)
+  //   item.map((userData) => {
+  //     console.log(userData.displayName);
+  // });
       return(
         <View style={{ borderBottomWidth: 0.75, borderBottomColor : 'gray', flex: 1 , paddingLeft : 10} }>
-          <Text style = {styles.listItemDisplayStyle}> {item.value} - {item.number}</Text>
+          <Text style = {styles.listItemDisplayStyle}> {item.displayName} - {item.phoneNumber}</Text>
         </View>
       );
   }

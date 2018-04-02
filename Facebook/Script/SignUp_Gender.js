@@ -115,7 +115,8 @@ render(){
     saveUserDetailsToDB(){
         var currentUser = firebase.auth().currentUser
         var user = this.state.user
-        firebase.database().ref('user/'+currentUser.uid).set({
+        
+        firebase.database().ref('profiles/').push().set({
             firstName:user.firstName,
             lastName : user.lastName,
             emailId : user.emailId,
@@ -123,11 +124,27 @@ render(){
             gender:user.gender,
             password:user.password,
             displayName : user.firstName+user.lastName,
+            uId : currentUser.uid
         }).then((response)=>{
             console.log(response)
         }).catch((error)=>{
             console.log(error)
         })
+
+
+        // firebase.database().ref('user/'+currentUser.uid).set({
+        //     firstName:user.firstName,
+        //     lastName : user.lastName,
+        //     emailId : user.emailId,
+        //     phoneNumber:user.phoneNumber,
+        //     gender:user.gender,
+        //     password:user.password,
+        //     displayName : user.firstName+user.lastName,
+        // }).then((response)=>{
+        //     console.log(response)
+        // }).catch((error)=>{
+        //     console.log(error)
+        // })
     }
     sendVerificationMail(){
 
