@@ -23,6 +23,26 @@ componentDidMount(){
       arrayData.push(userDetail.val())
       this.setState({users:arrayData})
     })
+    firebase.database().ref('profiles/').on('child_changed',(userDetail)=>{
+      console.log('updated profile : ',userDetail.val())
+      var arrayData = this.state.users
+      
+      arrayData.map((item)=>{
+        if(item.uId == userDetail.val().uId){
+          item.displayName = userDetail.val().displayName
+          item.phoneNumber = userDetail.val().phoneNumber
+        }
+        return item
+      })
+      console.log('local updation : ',arrayData)
+      this.setState({users:arrayData})
+    })
+
+    firebase.database().ref('profiles/').on('child_removed',(userDetail)=>{
+      console.log('Deleted profile : ',userDetail.val())
+      
+
+    })
   }
 getUserDetails(){
 

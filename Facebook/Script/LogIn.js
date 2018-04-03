@@ -43,10 +43,16 @@ export default class LogIn extends Component{
             <View style ={{flex:1,backgroundColor :'transparent',margin : 30,alignItems : 'center',justifyContent : 'center',alignItems : 'stretch'}}>
             {/* <View style = {{backgroundColor :'white',height : 40}}/>
             <View style = {{flex:1,backgroundColor :'skyblue'}}/> */}
-            <TextInput placeholder = 'Email address or Phone number' style = {MyStyles.inputText} underlineColorAndroid={'transparent'} onChangeText = {(text)=>
+            <TextInput placeholder = 'Email address or Phone number' 
+             autoCorrect = {false}
+             autoCapitalize = 'none'
+            style = {MyStyles.inputText} underlineColorAndroid={'transparent'} onChangeText = {(text)=>
             this.state.userId = text
             }/>
-            <TextInput placeholder = 'Password'style = {MyStyles.inputText}underlineColorAndroid={'transparent'} secureTextEntry = {true} onChangeText = {(text)=>
+            <TextInput placeholder = 'Password' 
+             autoCorrect = {false}
+             autoCapitalize = 'none'
+            style = {MyStyles.inputText}underlineColorAndroid={'transparent'} secureTextEntry = {true} onChangeText = {(text)=>
             this.state.password = text
             }/>
             <TouchableOpacity onPress = {() => this.performLogin()}
@@ -69,20 +75,7 @@ export default class LogIn extends Component{
     }
     saveProfileInfo(){
         console.log('password forgot')
-        firebase.database().ref('profiles/').push().set({
-            firstName:'f Name1',
-            lastName : 'l name1',
-            emailId : 'user.emailId',
-            phoneNumber:'user.phoneNumber',
-            gender:'user.gender',
-            password:'user.password',
-            displayName : 'user_firstName+user.lastName',
-            uId : 'currentUser_uid'
-        }).then((response)=>{
-            console.log(response)
-        }).catch((error)=>{
-            console.log(error)
-        })
+       
     }
     performLogin(){
          firebase.auth().signInWithEmailAndPassword(this.state.userId,this.state.password).then((response)=>{
